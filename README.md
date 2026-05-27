@@ -1,4 +1,4 @@
-# opencode OpenRouter Provider Rotator
+# Opencode Provider Rotator
 
 Global opencode plugin that rotates across multiple OpenRouter API keys. When OpenRouter returns a retryable limit or outage response, the plugin temporarily blocks that key and retries the same request with the next configured key.
 
