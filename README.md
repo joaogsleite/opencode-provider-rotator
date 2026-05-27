@@ -1,10 +1,17 @@
 # opencode OpenRouter Provider Rotator
 
-Local opencode plugin that rotates across multiple OpenRouter API keys. When OpenRouter returns a retryable limit or outage response, the plugin temporarily blocks that key and retries the same request with the next configured key.
+Global opencode plugin that rotates across multiple OpenRouter API keys. When OpenRouter returns a retryable limit or outage response, the plugin temporarily blocks that key and retries the same request with the next configured key.
 
-## Usage
+## Global Setup
 
-Set your OpenRouter keys in `opencode.jsonc`:
+Install the plugin in your global opencode config directory:
+
+```sh
+mkdir -p ~/.config/opencode/plugins
+cp openrouter-rotator.ts ~/.config/opencode/plugins/openrouter-rotator.ts
+```
+
+Then add your OpenRouter configuration to `~/.config/opencode/opencode.jsonc`:
 
 ```jsonc
 {
@@ -23,7 +30,23 @@ Set your OpenRouter keys in `opencode.jsonc`:
 }
 ```
 
-Or set them as a comma-separated or newline-separated environment variable before starting opencode:
+You can also keep keys out of the config file and read them from an environment variable:
+
+```jsonc
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "openrouter": {
+      "options": {
+        "rotatorKeysEnv": "OPENROUTER_API_KEYS",
+        "apiKey": "opencode-openrouter-rotator",
+      },
+    },
+  },
+}
+```
+
+Then start opencode with:
 
 ```sh
 export OPENROUTER_API_KEYS="your-first-openrouter-key,your-second-openrouter-key"
@@ -34,7 +57,7 @@ Use OpenRouter models normally, for example `openrouter/anthropic/claude-sonnet-
 
 ## Configuration
 
-opencode auto-loads `.opencode/plugins/openrouter-rotator.ts` at startup. The included `opencode.jsonc` enables the OpenRouter provider with a placeholder key; the plugin replaces the request `Authorization` header with one of your real keys.
+opencode auto-loads `~/.config/opencode/plugins/openrouter-rotator.ts` at startup. The global `opencode.jsonc` enables the OpenRouter provider with a placeholder key; the plugin replaces the request `Authorization` header with one of your real keys.
 
 Plugin options:
 
