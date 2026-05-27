@@ -23,7 +23,7 @@ Then add your OpenRouter configuration to `~/.config/opencode/opencode.jsonc`:
           "your-first-openrouter-key",
           "your-second-openrouter-key",
         ],
-        "apiKey": "opencode-openrouter-rotator",
+        "apiKey": "opencode-provider-rotator",
       },
     },
   },
@@ -39,7 +39,7 @@ You can also keep keys out of the config file and read them from an environment 
     "openrouter": {
       "options": {
         "rotatorKeysEnv": "OPENROUTER_API_KEYS",
-        "apiKey": "opencode-openrouter-rotator",
+        "apiKey": "opencode-provider-rotator",
       },
     },
   },
