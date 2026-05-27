@@ -8,7 +8,7 @@ Install the plugin in your global opencode config directory:
 
 ```sh
 mkdir -p ~/.config/opencode/plugins
-cp openrouter-rotator.ts ~/.config/opencode/plugins/openrouter-rotator.ts
+cp provider-rotator.ts ~/.config/opencode/plugins/provider-rotator.ts
 ```
 
 Then add your OpenRouter configuration to `~/.config/opencode/opencode.jsonc`:
@@ -57,7 +57,7 @@ Use OpenRouter models normally, for example `openrouter/anthropic/claude-sonnet-
 
 ## Configuration
 
-opencode auto-loads `~/.config/opencode/plugins/openrouter-rotator.ts` at startup. The global `opencode.jsonc` enables the OpenRouter provider with a placeholder key; the plugin replaces the request `Authorization` header with one of your real keys.
+opencode auto-loads `~/.config/opencode/plugins/provider-rotator.ts` at startup. The global `opencode.jsonc` enables the OpenRouter provider with a placeholder key; the plugin replaces the request `Authorization` header with one of your real keys.
 
 Plugin options:
 
