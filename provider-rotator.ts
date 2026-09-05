@@ -46,8 +46,10 @@ type ProviderError = {
 
 const PLACEHOLDER_API_KEY = "opencode-provider-rotator";
 const DEFAULT_BLOCKED_FOR_MS = 60 * 60 * 1000;
+const CLIENT_ERROR_STATUSES = Array.from({ length: 100 }, (_, index) => 400 + index);
 const OPENROUTER_RETRY_STATUSES = [
-  402, 408, 409, 425, 429, 500, 502, 503, 504,
+  ...CLIENT_ERROR_STATUSES,
+  500, 502, 503, 504,
 ];
 const OPENROUTER_RETRY_ERROR_CODES = [
   "insufficient_credits",
@@ -55,7 +57,10 @@ const OPENROUTER_RETRY_ERROR_CODES = [
   "quota_exceeded",
   "context_length_exceeded",
 ];
-const GOOGLE_RETRY_STATUSES = [408, 409, 425, 429, 500, 502, 503, 504];
+const GOOGLE_RETRY_STATUSES = [
+  ...CLIENT_ERROR_STATUSES,
+  500, 502, 503, 504,
+];
 const GOOGLE_RETRY_ERROR_CODES = [
   "ABORTED",
   "DEADLINE_EXCEEDED",
@@ -148,6 +153,10 @@ function matchesRetryErrorCode(code: string, retryErrorCodes: string[]) {
     retryErrorCodes.includes(code.toLowerCase()) ||
     retryErrorCodes.includes(code.toUpperCase())
   );
+}
+
+function isClientErrorStatus(status: number) {
+  return status >= 400 && status < 500;
 }
 
 function hasRotatorConfig(rotator: RotatorConfig | undefined) {
@@ -261,6 +270,7 @@ function createRotatingFetch(
 
         const error = await provider.readError(response);
         if (
+          !isClientErrorStatus(response.status) &&
           error.code &&
           !matchesRetryErrorCode(error.code, options.retryErrorCodes)
         )

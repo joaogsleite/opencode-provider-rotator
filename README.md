@@ -110,7 +110,7 @@ Plugin options:
 - `rotatorKeys`: array of provider API keys, or a comma/newline-separated string.
 - `rotatorKeysEnv`: optional environment variable containing additional keys. Defaults to `OPENROUTER_API_KEYS` for OpenRouter and `GEMINI_API_KEYS` for Google Gemini.
 - `rotatorBlockedForMs`: how long to skip a key after a retryable failure. Defaults to one hour.
-- `rotatorRetryStatuses`: HTTP statuses that trigger rotation. OpenRouter defaults to `402`, `408`, `409`, `425`, `429`, `500`, `502`, `503`, and `504`. Google Gemini defaults to `408`, `409`, `425`, `429`, `500`, `502`, `503`, and `504`.
+- `rotatorRetryStatuses`: HTTP statuses that trigger rotation. OpenRouter and Google Gemini default to all `4xx` statuses plus `500`, `502`, `503`, and `504`.
 - `rotatorRetryErrorCodes`: provider error codes that trigger rotation when present. OpenRouter defaults to `insufficient_credits`, `rate_limit_exceeded`, `quota_exceeded`, and `context_length_exceeded`. Google Gemini defaults to `ABORTED`, `DEADLINE_EXCEEDED`, `INTERNAL`, `RESOURCE_EXHAUSTED`, and `UNAVAILABLE`.
 
 This plugin supports the Google Generative AI provider used by `google/*` models. It does not rotate Google Vertex AI credentials for `google-vertex/*` models.
